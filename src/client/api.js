@@ -14,4 +14,4 @@ export const fetchPost = async () => {
     }
 };
 
-fetchPost()
+//fetchPost()
