@@ -10,7 +10,7 @@ export const fetchPost = async (token) => {
                 'Authorization': `Bearer${token}`
             },
             body: JSON.stringify({
-                //come back this
+                
             })
         });
         const result = await response.json();
@@ -24,4 +24,25 @@ export const fetchPost = async (token) => {
     }
 };
 
-fetchPost()
+export const registerUser = async () => {
+    try {
+      const response = await fetch(
+        `${baseUrl}/users/register`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: {
+            username: '',
+            password: ''
+          }
+        })
+      });
+      const result = await response.json();
+      console.log(result)
+      return result
+    } catch (err) {
+      console.error(err);
+    }
+  }
