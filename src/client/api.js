@@ -24,25 +24,25 @@ export const fetchPost = async (token) => {
     }
 };
 
-export const registerUser = async () => {
-    try {
-      const response = await fetch(
-        `${baseUrl}/users/register`, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          user: {
-            username: '',
-            password: ''
-          }
-        })
-      });
-      const result = await response.json();
-      console.log(result)
-      return result
-    } catch (err) {
-      console.error(err);
-    }
-  }
+// export const registerUser = async () => {
+//     try {
+//       const response = await fetch(
+//         `${baseUrl}/users/register`, {
+//         method: "POST",
+//         headers: {
+//           'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//           user: {
+//             username: '',
+//             password: ''
+//           }
+//         })
+//       });
+//       const result = await response.json();
+//       console.log(result)
+//       return result
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   }
