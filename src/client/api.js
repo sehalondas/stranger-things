@@ -24,6 +24,8 @@ export const fetchPost = async (token) => {
     }
 };
 
+// fetchPost();
+
 // export const registerUser = async () => {
 //     try {
 //       const response = await fetch(
