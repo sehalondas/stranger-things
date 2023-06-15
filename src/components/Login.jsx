@@ -1,15 +1,13 @@
 import { useState } from "react";
 import {BrowserRouter, Route, Link} from 'react-router-dom';
-import storeToken from "../client/storeToken";
+import { storeToken } from "..";
 
 const cohortName = '2303-ftb-et-web-pt';
 const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
 
-export const Login =()=>{
+export const Login =(setToken)=>{
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [token, setToken] = useState('');
-    //store token to call in profile compoent to view data
 
     const handleChange = (event) => {
         setUsername(event.target.value);
@@ -25,7 +23,6 @@ export const Login =()=>{
     };
 
     const login = async () => {
-
         try {
           const response = await fetch(`${baseUrl}/users/login`, {
             method: "POST",
@@ -40,10 +37,9 @@ export const Login =()=>{
             })
           });
           const result = await response.json();
-          console.log(result.data.token);
-          setToken(result.data.token);
-          console.log(token);
-          storeToken(token);
+          const tok = result.data.token;
+          localStorage.setItem("token", tok)
+          console.log("loginResponse", `localStorage set with token value: ${tok}`);
           return result
         } catch (err) {
           console.error(err);

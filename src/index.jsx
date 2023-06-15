@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM  from "react-dom";
 import { useState } from "react";
 import { fetchPost, 
@@ -9,8 +9,18 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
 import Navbar from "./components/Navbar";
+import Posts from "./components/Posts";
 
 const Main =()=>{
+    const [token, setToken] = useState('');
+
+    useEffect(()=>{
+        const storedToken = localStorage.getItem('token');
+        if(storedToken) {
+            setToken(storedToken);
+        }
+    }, [])
+
    return(
    <BrowserRouter>
 
@@ -18,11 +28,11 @@ const Main =()=>{
         <Navbar/>
 
         <Route exact path='/'>
-                <Login/>
+                <Posts/>
             </Route>
 
             <Route exact path='/Login'>
-                <Login/>
+                <Login setToken={setToken}/>
             </Route>
 
             <Route exact path='/register'>
@@ -30,7 +40,11 @@ const Main =()=>{
             </Route>
 
             <Route exact path='/Profile'>
-                <Profile/>
+                <Profile token={token}/>
+            </Route>
+
+            <Route exact path='/Posts'>
+                <Posts/>
             </Route>
 
         </div>
