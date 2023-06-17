@@ -73,8 +73,8 @@ export const Posts = ({token}) => {
   useEffect(() => {
     fetchPosts();
     checkToken();
-    deletePost();
-    updatePost();
+    // deletePost();
+    // updatePost();
   }, [token]);
 
   return (
