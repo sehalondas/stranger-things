@@ -44,7 +44,7 @@ const Main =()=>{
             </Route>
 
             <Route exact path='/Posts'>
-                <Posts/>
+                <Posts token={token} />
             </Route>
 
         </div>

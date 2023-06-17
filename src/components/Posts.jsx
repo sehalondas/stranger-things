@@ -4,7 +4,7 @@ import {BrowserRouter, Route, Link} from 'react-router-dom';
 const cohortName = '2303-ftb-et-web-pt';
 const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
 
-export const Posts=()=>{
+export const Posts=({token})=>{
     const [posts, setPosts] = useState([]);
 
   const fetchPosts = async () => {
