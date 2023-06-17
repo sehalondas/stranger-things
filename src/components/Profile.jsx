@@ -4,8 +4,8 @@ import {BrowserRouter, Route, Link} from 'react-router-dom';
 const cohortName = '2303-ftb-et-web-pt';
 const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
 
-export const Profile =({token})=> {
-    const [userData, setUserData] = useState([]);  
+export const Profile = ({ token }) => {
+  const [userData, setUserData] = useState(null);
 
     const myData = async () => {
 
@@ -33,18 +33,34 @@ export const Profile =({token})=> {
 
       useEffect(()=>{myData()}, [])
 
-    return (
-      <>
-      {userData.length > 0 && (
-          <div>
-              {userData.map(data=>(
-                  <div key={data.id}>
-                      <h3 key={data.id}>{data.username}</h3>
-                      <p key={data.id}>{data.messages}</p>
-                      <p key={data.id}>{data.posts}</p>
-                      </div>
-              ))}
+  return (
+    <>
+      {userData && (
+        <div>
+          <div key={userData._id}>
+            <h3>{userData.username}</h3>
+
+            {userData.posts.length > 0 && (
+              <div>
+                {userData.posts.map((data) => (
+                  <div key={data._id}>
+                    <h4>{data.title}</h4>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {userData.messages.length > 0 && (
+              <div>
+                {userData.posts.map((data) => (
+                  <div key={data._id}>
+                    <h4>{data}</h4>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
+        </div>
       )}
       </>
     )
