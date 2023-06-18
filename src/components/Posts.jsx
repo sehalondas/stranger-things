@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import {BrowserRouter, Route, Link} from 'react-router-dom';
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
-const cohortName = '2303-ftb-et-web-pt';
+const cohortName = "2303-ftb-et-web-pt";
 const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
 
-export const Posts = ({token}) => {
+export const Posts = ({ token }) => {
   const [posts, setPosts] = useState([]);
   const [addPost, setAddPost] = useState(false);
 
-  const checkToken=()=>{
-    if(token.length > 0) {
+  const checkToken = () => {
+    if (token.length > 0) {
       setAddPost(true);
     }
-    }
+  };
 
   const fetchPosts = async () => {
     try {
@@ -34,9 +34,7 @@ export const Posts = ({token}) => {
 
   return (
     <>
-      {addPost === true && (
-        <Link to='/Posts/Add'>Add Post</Link>
-      )}
+      {addPost === true && <Link to="/Posts/Add">Add Post</Link>}
 
       {posts.length > 0 && (
         <div>
