@@ -11,9 +11,13 @@ import Register from "./components/Register";
 import Profile from "./components/Profile";
 import Navbar from "./components/Navbar";
 import Posts from "./components/Posts";
+import AddPost from "./components/AddPost";
+import EditPost from "./components/EditPost";
+
 
 const Main = () => {
   const [token, setToken] = useState("");
+  const [postIdNum, setPostIdNum] =useState("");
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -35,16 +39,24 @@ const Main = () => {
           <Login setToken={setToken} />
         </Route>
 
-        <Route exact path="/register">
+        <Route exact path="/Register">
           <Register />
         </Route>
 
         <Route exact path="/Profile">
-          <Profile token={token} />
+          <Profile token={token} postIdNum={postIdNum} setPostIdNum={setPostIdNum}/>
         </Route>
 
         <Route exact path="/Posts">
           <Posts token={token} />
+        </Route>
+
+        <Route exact path="/Posts/Add">
+            <AddPost token={token}/>
+        </Route>
+
+        <Route exact path="/Posts/Edit">
+            <EditPost token={token} setPostIdNum={setPostIdNum} postIdNum={postIdNum}/>
         </Route>
       </div>
     </BrowserRouter>

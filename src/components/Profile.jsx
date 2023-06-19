@@ -1,32 +1,37 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import EditPost from "./EditPost";
 
 const cohortName = "2303-ftb-et-web-pt";
 const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
 
-export const Profile = ({ token }) => {
+export const Profile = ({ token, setPostIdNum, postIdNum}) => {
   const [userData, setUserData] = useState(null);
-  
-    const deletePost = async (postId) => {
-      try {
-        const response = await fetch(`${baseUrl}/posts/${postId}`, {
-          method: "DELETE",
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        const result = await response.json();
-        console.log(result);
-        return result
-      } catch (err) {
-        console.error(err);
-      }
-    }
+  const [editPost, setEditPost] =useState(false);
 
-  const handleEdit=()=>{
-    console.log('edit')
+  const handleClick=(event)=>{
+    event.preventDefault();
+    setPostIdNum(event.target.id)
+    console.log(postIdNum); 
+    setEditPost(true);
   }
+
+  const deletePost = async (postId) => {
+    try {
+      const response = await fetch(`${baseUrl}/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+      return result;
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const myData = async () => {
     try {
@@ -67,7 +72,21 @@ export const Profile = ({ token }) => {
                     <p>{data.price}</p>
                     <p>{data.location}</p>
                     <p>{data.willDeliver}</p>
-                    <button id={`${data._id}`} onClick={()=> deletePost(data._id)}>DELETE</button>
+                    <button
+                      id={`${data._id}`}
+                      onClick={handleClick}
+                    >
+                      Edit
+                    </button>
+                    {editPost === true && (
+                        <EditPost setEditPost={setEditPost}/>
+                      )}
+                    <button
+                      id={`${data._id}`}
+                      onClick={() => deletePost(data._id)}
+                    >
+                      DELETE
+                    </button>
                   </div>
                 ))}
               </div>
