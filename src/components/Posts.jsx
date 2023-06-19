@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import { format } from "date-fns";
 
 const cohortName = "2303-ftb-et-web-pt";
 const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
@@ -19,7 +20,7 @@ export const Posts = ({ token }) => {
       const response = await fetch(`${baseUrl}/posts`);
       const result = await response.json();
       console.log(result);
-      setPosts(result.data.posts);
+      setPosts(result.data.posts.reverse());
       console.log(posts);
       return result;
     } catch (err) {
@@ -32,6 +33,11 @@ export const Posts = ({ token }) => {
     checkToken();
   }, [token]);
 
+  const formatTime = (timeString) => {
+    const formattedTime = format(new Date(timeString), "yyyy-MM-dd HH:mm");
+    return formattedTime;
+  };
+
   return (
     <>
       {addPost === true && <Link to="/Posts/Add">Add Post</Link>}
@@ -42,6 +48,7 @@ export const Posts = ({ token }) => {
             <div key={post._id}>
               <h3>{post.title}</h3>
               <h4>{post.author.username}</h4>
+              <p>{formatTime(post.createdAt)}</p>
               <p>{post.description}</p>
               <p>{post.price}</p>
               <p>{post.location}</p>

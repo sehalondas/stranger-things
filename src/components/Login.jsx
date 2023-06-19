@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { storeToken } from "..";
 
 const cohortName = "2303-ftb-et-web-pt";
@@ -8,6 +8,7 @@ const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
 export const Login = (setToken) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   const handleChange = (event) => {
     setUsername(event.target.value);
@@ -20,6 +21,7 @@ export const Login = (setToken) => {
     setUsername("");
     setPassword("");
     console.log(password);
+    history.push("/Profile");
   };
 
   const login = async () => {

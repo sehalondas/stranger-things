@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const cohortName = "2303-ftb-et-web-pt";
 const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
 
 export const EditPost =({token, postIdNum, setPostIdNum, setEditPost})=> {
-    const [title, setTitle] = useState("");
+  const history = useHistory();
+
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [location, setLocation] = useState("");
   const [checked, setChecked] = useState(false);
   
   const updatePost = async () => {
@@ -44,6 +47,7 @@ export const EditPost =({token, postIdNum, setPostIdNum, setEditPost})=> {
     setPrice("");
     setChecked(false);
     setEditPost(false);
+    history.push("/");
   };
 
   useEffect(() => {
@@ -51,7 +55,7 @@ export const EditPost =({token, postIdNum, setPostIdNum, setEditPost})=> {
     if (storedPostId) {
       setPostIdNum(storedPostId);
     }
-  }, [postIdNum]);
+  }, [postIdNum, setPostIdNum]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -78,6 +82,14 @@ export const EditPost =({token, postIdNum, setPostIdNum, setEditPost})=> {
         value={price}
         onChange={(event) => {
           setPrice(event.target.value);
+        }}
+      ></input>
+      <input
+        type="text"
+        placeholder="Location"
+        value={location}
+        onChange={(event) => {
+          setLocation(event.target.value);
         }}
       ></input>
       <label>

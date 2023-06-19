@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import EditPost from "./EditPost";
+
 
 const cohortName = "2303-ftb-et-web-pt";
 const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
@@ -8,13 +9,14 @@ const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
 export const Profile = ({ token, setPostIdNum, postIdNum}) => {
   const [userData, setUserData] = useState(null);
   const [editPost, setEditPost] =useState(false);
+  const history = useHistory();
 
   const handleClick=(event)=>{
     event.preventDefault();
     setPostIdNum(event.target.id)
     console.log(postIdNum); 
     setEditPost(true);
-  }
+  };
 
   const deletePost = async (postId) => {
     try {
@@ -27,6 +29,12 @@ export const Profile = ({ token, setPostIdNum, postIdNum}) => {
       });
       const result = await response.json();
       console.log(result);
+      if (result.success) {
+        setUserData((prevUserData) => ({
+          ...prevUserData,
+          posts: prevUserData.posts.filter((post) => post._id !== postId),
+        }));
+      }
       return result;
     } catch (err) {
       console.error(err);
@@ -35,34 +43,62 @@ export const Profile = ({ token, setPostIdNum, postIdNum}) => {
 
   const myData = async () => {
     try {
-      const response = await fetch(`${baseUrl}/users/me`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const result = await response.json();
-      console.log(result);
-      setUserData(result.data);
-      console.log(userData);
-      return result;
-    } catch (err) {
+        const response = await fetch(`${baseUrl}/users/me`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const result = await response.json();
+        console.log(result);
+        setUserData(result.data);
+        return result;
+      } catch (err) {
       console.error(err);
-    }
-  };
+      }
+    };
 
-  useEffect(() => {
-    myData();
-  }, []);
+    useEffect(() => {
+      if (token) {
+        myData();
+      } else {
+        setUserData(null);
+      }
+    }, [!token]);
+
+    useEffect(() => {
+      const storedUserData = localStorage.getItem("userData");
+  
+      if (storedUserData) {
+        setUserData(JSON.parse(storedUserData));
+      } else {
+        fetchUserData();
+      }
+    }, []);
+  
+    useEffect(() => {
+      if (userData) {
+        localStorage.setItem("userData", JSON.stringify(userData));
+      }
+    }, [userData]);
+    
+
 
   return (
     <>
+      {!token && (
+        <div>
+          <h1>Please login or create an account for access.</h1>
+        </div>
+      )}
+
       {userData && (
         <div>
           <div key={userData._id}>
+            <h1>Welcome back {`${userData.username}`}!</h1>
             <h3>{userData.username}</h3>
 
-            {userData.posts.length > 0 && (
+            {userData.posts && userData.posts.length > 0 && (
               <div>
                 {userData.posts.map((data) => (
                   <div key={data._id}>
@@ -92,7 +128,7 @@ export const Profile = ({ token, setPostIdNum, postIdNum}) => {
               </div>
             )}
 
-            {userData.messages.length > 0 && (
+            {userData.messages && userData.messages.length > 0 && (
               <div>
                 {userData.messages.map((data) => (
                   <div key={data._id}>

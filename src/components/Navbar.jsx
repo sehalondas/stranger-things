@@ -8,8 +8,11 @@ export const Navbar = () => {
   return (
     <>
       <Link to="/Login">Login</Link>
-      <Link to="/profile">Profile</Link>
+      <Link to="/Profile">Profile</Link>
       <Link to="/Posts">Posts</Link>
+      <Link to="/Login" onClick={logOut}>
+        Logout
+      </Link>
     </>
   );
 };

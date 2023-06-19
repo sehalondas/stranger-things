@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   fetchPost,
   // registerUser
@@ -13,6 +13,7 @@ import Navbar from "./components/Navbar";
 import Posts from "./components/Posts";
 import AddPost from "./components/AddPost";
 import EditPost from "./components/EditPost";
+//import Messages from "./components/Messages";
 
 
 const Main = () => {
@@ -58,6 +59,11 @@ const Main = () => {
         <Route exact path="/Posts/Edit">
             <EditPost token={token} setPostIdNum={setPostIdNum} postIdNum={postIdNum}/>
         </Route>
+
+        {/*<Route exact path="/Profile/Messages">
+          <Messages token={token} postIdNum={postIdNum} setPostIdNum={setPostIdNum}/>
+  </Route>*/}
+
       </div>
     </BrowserRouter>
   );
