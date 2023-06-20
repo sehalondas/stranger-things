@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
-import {
-  fetchPost,
-  // registerUser
-} from "./client/api";
+import "./style.css";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -13,7 +10,7 @@ import Navbar from "./components/Navbar";
 import Posts from "./components/Posts";
 import AddPost from "./components/AddPost";
 import EditPost from "./components/EditPost";
-//import Messages from "./components/Messages";
+import Messages from "./components/Messages";
 
 
 const Main = () => {
@@ -60,9 +57,9 @@ const Main = () => {
             <EditPost token={token} setPostIdNum={setPostIdNum} postIdNum={postIdNum}/>
         </Route>
 
-        {/*<Route exact path="/Profile/Messages">
+        <Route exact path="/Profile/Messages">
           <Messages token={token} postIdNum={postIdNum} setPostIdNum={setPostIdNum}/>
-  </Route>*/}
+        </Route>
 
       </div>
     </BrowserRouter>

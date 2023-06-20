@@ -81,7 +81,7 @@ export const Profile = ({ token, setPostIdNum, postIdNum}) => {
         localStorage.setItem("userData", JSON.stringify(userData));
       }
     }, [userData]);
-    
+  
 
 
   return (
@@ -96,48 +96,59 @@ export const Profile = ({ token, setPostIdNum, postIdNum}) => {
         <div>
           <div key={userData._id}>
             <h1>Welcome back {`${userData.username}`}!</h1>
-            <h3>{userData.username}</h3>
+            <h2>{userData.username}</h2>
 
-            {userData.posts && userData.posts.length > 0 && (
-              <div>
-                {userData.posts.map((data) => (
-                  <div key={data._id}>
-                    <h3>{data.title}</h3>
-                    <h4>{data.author.username}</h4>
-                    <p>{data.description}</p>
-                    <p>{data.price}</p>
-                    <p>{data.location}</p>
-                    <p>{data.willDeliver}</p>
-                    <button
-                      id={`${data._id}`}
-                      onClick={handleClick}
-                    >
-                      Edit
-                    </button>
-                    {editPost === true && (
-                        <EditPost setEditPost={setEditPost}/>
-                      )}
-                    <button
-                      id={`${data._id}`}
-                      onClick={() => deletePost(data._id)}
-                    >
-                      DELETE
-                    </button>
+            <div className="profile-content">
+              {userData.messages && userData.messages.length ? (
+                <div>
+                  <div id="index-span">
+                  <h3 id="inbox"> Inbox ({userData.messages.length})</h3>
+                  {userData.messages.map((message) => {
+                    return (
+                      <div id="message" key={message._id}>
+                        <label id="sender">{message.fromUser.username}</label>
+                        <p id="message-content">{message.content}</p>
+                      </div>
+                    );
+                  })}
+                  </div>
+                </div>
+              ) : (
+                <h3>You haven't received any messages yet.</h3>
+              )};
+
+
+              {userData.posts && userData.posts.length > 0 && (
+                <div>
+                  <h3>Your Posts</h3>
+                  {userData.posts.map((data) => (
+                    <div key={data._id}>
+                      <h3>{data.title}</h3>
+                      <h4>{data.author.username}</h4>
+                      <p>{data.description}</p>
+                      <p>{data.price}</p>
+                      <p>{data.location}</p>
+                      <p>{data.willDeliver}</p>
+                      <button
+                        id={`${data._id}`}
+                        onClick={handleClick}
+                      >
+                        Edit
+                      </button>
+                      {editPost === true && (
+                          <EditPost setEditPost={setEditPost}/>
+                        )}
+                      <button
+                        id={`${data._id}`}
+                        onClick={() => deletePost(data._id)}
+                      >
+                        DELETE
+                      </button>
                   </div>
                 ))}
               </div>
             )}
-
-            {userData.messages && userData.messages.length > 0 && (
-              <div>
-                {userData.messages.map((data) => (
-                  <div key={data._id}>
-                    <h4>{data.content}</h4>
-                    <p>{data.fromUser.username}</p>
-                  </div>
-                ))}
-              </div>
-            )}
+            </div>
           </div>
         </div>
       )}

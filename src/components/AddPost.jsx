@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const cohortName = "2303-ftb-et-web-pt";
 const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
@@ -9,6 +10,7 @@ export const AddPost = ({ token }) => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [checked, setChecked] = useState(false);
+  const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -17,6 +19,7 @@ export const AddPost = ({ token }) => {
     setDescription("");
     setPrice("");
     setChecked(false);
+    history.push("/Posts");
   };
 
   const makePost = async () => {
