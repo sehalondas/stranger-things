@@ -17,12 +17,13 @@ const Main = () => {
   const [token, setToken] = useState("");
   const [postIdNum, setPostIdNum] =useState("");
 
+
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);
     }
-  }, []);
+  }, [token]);
 
   return (
     <BrowserRouter>
@@ -54,7 +55,7 @@ const Main = () => {
         </Route>
 
         <Route exact path="/Posts/Edit">
-            <EditPost token={token} setPostIdNum={setPostIdNum} postIdNum={postIdNum}/>
+            <EditPost setPostIdNum={setPostIdNum} postIdNum={postIdNum}/>
         </Route>
 
         <Route exact path="/Profile/Messages">

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 const cohortName = "2303-ftb-et-web-pt";

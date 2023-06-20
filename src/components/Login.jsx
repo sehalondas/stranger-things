@@ -5,7 +5,7 @@ import { storeToken } from "..";
 const cohortName = "2303-ftb-et-web-pt";
 const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
 
-export const Login = (setToken) => {
+export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
@@ -21,7 +21,7 @@ export const Login = (setToken) => {
     setUsername("");
     setPassword("");
     console.log(password);
-    history.push("/Profile");
+    window.location.replace('/');
   };
 
   const login = async () => {

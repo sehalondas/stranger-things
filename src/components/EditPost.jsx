@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 const cohortName = "2303-ftb-et-web-pt";
 const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
 
-export const EditPost =({token, postIdNum, setPostIdNum, setEditPost})=> {
+export const EditPost = ({ token, postNum, userData }) => {
   const history = useHistory();
 
   const [title, setTitle] = useState("");
@@ -12,14 +12,14 @@ export const EditPost =({token, postIdNum, setPostIdNum, setEditPost})=> {
   const [price, setPrice] = useState("");
   const [location, setLocation] = useState("");
   const [checked, setChecked] = useState(false);
-  
+
   const updatePost = async () => {
     try {
-      const response = await fetch(`${baseUrl}/posts/${postIdNum}`, {
+      const response = await fetch(`${baseUrl}/posts/${postNum}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           post: {
@@ -42,20 +42,27 @@ export const EditPost =({token, postIdNum, setPostIdNum, setEditPost})=> {
   const handleSubmit = (event) => {
     event.preventDefault();
     updatePost();
-    setTitle("");
-    setDescription("");
-    setPrice("");
-    setChecked(false);
-    setEditPost(false);
+    // setTitle("");
+    // setDescription("");
+    // setPrice("");
+    // setChecked(false);
+    // setEditPost(false);
     history.push("/");
   };
 
   useEffect(() => {
-    const storedPostId = postIdNum;
-    if (storedPostId) {
-      setPostIdNum(storedPostId);
+    if (userData) {
+      localStorage.setItem("userData", JSON.stringify(userData));
     }
-  }, [postIdNum, setPostIdNum]);
+  }, [userData]);
+
+
+  // useEffect(() => {
+  //   const storedPostId = postIdNum;
+  //   if (storedPostId) {
+  //     setPostIdNum(storedPostId);
+  //   }
+  // }, [postIdNum, setPostIdNum]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -107,6 +114,6 @@ export const EditPost =({token, postIdNum, setPostIdNum, setEditPost})=> {
       <button type="submit">Submit</button>
     </form>
   );
-}
+};
 
 export default EditPost;

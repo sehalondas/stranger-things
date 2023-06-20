@@ -8,15 +8,17 @@ const baseUrl = `https://strangers-things.herokuapp.com/api/${cohortName}`;
 
 export const Profile = ({ token, setPostIdNum, postIdNum}) => {
   const [userData, setUserData] = useState(null);
-  const [editPost, setEditPost] =useState(false);
-  const history = useHistory();
-
-  const handleClick=(event)=>{
+  const [editPost, setEditPost] = useState(false);
+  const [postNum, setPostNum] = useState('');
+ 
+  const handleClick = (event) => {
     event.preventDefault();
-    setPostIdNum(event.target.id)
-    console.log(postIdNum); 
+    setPostNum(event.target.id);
+    console.log(postNum);
     setEditPost(true);
   };
+ 
+  const history = useHistory();
 
   const deletePost = async (postId) => {
     try {
@@ -66,15 +68,15 @@ export const Profile = ({ token, setPostIdNum, postIdNum}) => {
       }
     }, [!token]);
 
-    useEffect(() => {
-      const storedUserData = localStorage.getItem("userData");
+    // useEffect(() => {
+    //   const storedUserData = localStorage.getItem("userData");
   
-      if (storedUserData) {
-        setUserData(JSON.parse(storedUserData));
-      } else {
-        fetchUserData();
-      }
-    }, []);
+    //   if (storedUserData) {
+    //     setUserData(JSON.parse(storedUserData));
+    //   } else {
+    //     fetchUserData();
+    //   }
+    // }, []);
   
     useEffect(() => {
       if (userData) {
@@ -136,7 +138,7 @@ export const Profile = ({ token, setPostIdNum, postIdNum}) => {
                         Edit
                       </button>
                       {editPost === true && (
-                          <EditPost setEditPost={setEditPost}/>
+                          <EditPost token={token} userData={userData} postNum={postNum}/>
                         )}
                       <button
                         id={`${data._id}`}
