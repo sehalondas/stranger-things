@@ -21,7 +21,7 @@ export const Login = () => {
     setUsername("");
     setPassword("");
     console.log(password);
-    window.location.replace('/');
+    window.location.replace('/Login');
   };
 
   const login = async () => {
